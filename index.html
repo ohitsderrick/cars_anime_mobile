@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#07070a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Cars: The Anime</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07070a;--bg2:#0e0e14;--bg3:#14141c;--bg4:#1a1a26;
+  --border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.14);
+  --text:#eeeef5;--text2:#8888a8;--text3:#44445a;
+  --pink:#ff2d78;--lime:#c8ff00;--cyan:#00e5ff;--amber:#ffb800;--purple:#9b5de5;
+  --display:'Bebas Neue',sans-serif;--body:'DM Sans',sans-serif;--jp:'Noto Sans JP',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);color:var(--text);font-family:var(--body);
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  padding-bottom:calc(env(safe-area-inset-bottom,0px) + 2rem);
+}
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:radial-gradient(circle,rgba(255,255,255,0.028) 1px,transparent 1px);
+  background-size:22px 22px;pointer-events:none;z-index:0;
+}
+.page{max-width:520px;margin:0 auto;padding:0 0 3rem;position:relative;z-index:1}
+
+/* ── HERO ── */
+.hero{
+  padding:calc(env(safe-area-inset-top,0px) + 1.5rem) 1.25rem 1.5rem;
+  border-bottom:1px solid var(--border2);
+  margin-bottom:2rem;
+  position:relative;overflow:hidden;
+}
+.hero::after{
+  content:'CARS';font-family:var(--display);font-size:11rem;line-height:1;
+  color:rgba(255,255,255,0.02);position:absolute;right:-0.5rem;top:0;
+  pointer-events:none;white-space:nowrap;
+}
+.hero-kicker{font-family:var(--jp);font-size:10px;color:var(--pink);letter-spacing:0.18em;margin-bottom:0.5rem}
+.hero-title{font-family:var(--display);font-size:clamp(3.2rem,14vw,5rem);line-height:0.88;letter-spacing:0.02em}
+.hero-title em{color:var(--lime);font-style:normal;display:block}
+.hero-sub{font-size:12px;color:var(--text3);margin-top:0.75rem;line-height:1.65;font-style:italic}
+.hero-pills{display:flex;gap:6px;flex-wrap:wrap;margin-top:1rem}
+.hero-pill{
+  font-family:var(--jp);font-size:10px;padding:4px 10px;
+  border:0.5px solid var(--border2);color:var(--text3);border-radius:20px;
+}
+
+/* ── SECTION ── */
+.sec{padding:0 1.25rem;margin-bottom:3rem}
+.sec-hdr{display:flex;align-items:baseline;gap:0.75rem;margin-bottom:0.3rem}
+.sec-num{font-family:var(--display);font-size:11px;color:var(--pink);letter-spacing:0.15em}
+.sec-title{font-family:var(--display);font-size:2rem;letter-spacing:0.04em;line-height:1}
+.sec-sub{font-size:11px;color:var(--text3);font-style:italic;margin-bottom:1.5rem;line-height:1.6}
+.divider{border:none;border-top:1px solid var(--border2);margin:2.5rem 0}
+
+/* ── CAR CARD ── */
+.car-card{
+  background:var(--bg2);
+  border-top:3px solid var(--car-color);
+  margin-bottom:1.5rem;
+  position:relative;
+  overflow:hidden;
+}
+.car-card::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(90deg,transparent,transparent 95px,rgba(255,255,255,0.008) 95px,rgba(255,255,255,0.008) 98px);
+  pointer-events:none;z-index:0;
+}
+
+/* SVG full-width illustration */
+.car-svg-wrap{
+  width:100%;height:0;padding-bottom:40%;
+  position:relative;background:var(--bg3);
+  border-bottom:0.5px solid var(--border);
+}
+.car-svg-wrap svg{position:absolute;inset:0;width:100%;height:100%}
+
+/* card header */
+.car-head{padding:1rem 1.25rem 0.75rem;position:relative;z-index:1;border-bottom:0.5px solid var(--border)}
+.car-owner-line{font-family:var(--display);font-size:0.75rem;letter-spacing:0.22em;color:var(--text3);margin-bottom:3px}
+.car-name{font-family:var(--display);font-size:clamp(1.7rem,7vw,2.4rem);letter-spacing:0.03em;line-height:0.92;margin-bottom:3px}
+.car-config{font-size:10px;color:var(--text3);margin-bottom:0.6rem;line-height:1.6}
+.car-tags{display:flex;gap:4px;flex-wrap:wrap}
+.tag{font-size:8px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:2px 7px}
+
+/* perspective toggle */
+.persp-toggle{display:flex;border-bottom:0.5px solid var(--border);position:relative;z-index:1}
+.persp-btn{
+  flex:1;font-family:var(--jp);font-size:9px;letter-spacing:0.16em;text-transform:uppercase;
+  padding:10px 0;text-align:center;border:none;background:transparent;
+  cursor:pointer;color:var(--text3);border-bottom:2px solid transparent;
+  -webkit-tap-highlight-color:transparent;transition:color 0.2s,border-color 0.2s;
+}
+.persp-btn.active-owner{color:var(--lime);border-bottom-color:var(--lime)}
+.persp-btn.active-outsider{color:var(--pink);border-bottom-color:var(--pink)}
+.persp-body{padding:1.25rem;display:none;position:relative;z-index:1}
+.persp-body.visible{display:block}
+.persp-text{font-size:13px;line-height:1.85;color:var(--text2)}
+
+/* bottom stats */
+.car-bottom{border-top:0.5px solid var(--border);position:relative;z-index:1}
+.bottom-toggle{
+  width:100%;font-family:var(--jp);font-size:9px;letter-spacing:0.16em;text-transform:uppercase;
+  padding:10px 1.25rem;text-align:left;background:transparent;border:none;
+  color:var(--text3);cursor:pointer;display:flex;justify-content:space-between;align-items:center;
+  -webkit-tap-highlight-color:transparent;
+}
+.bottom-toggle-arrow{font-size:12px;transition:transform 0.25s;display:inline-block}
+.bottom-inner{padding:0 1.25rem 1.25rem;display:none}
+.bottom-inner.open{display:block}
+.vibes-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:1rem}
+.vibe-chip{background:var(--bg3);border:0.5px solid var(--border);border-radius:3px;padding:7px 10px}
+.vibe-chip-lbl{font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:4px}
+.vibe-chip-val{font-size:12px;font-weight:700}
+.vibe-chip-bar{margin-top:4px;background:var(--bg4);height:3px;border-radius:1px}
+.vibe-chip-fill{height:100%;border-radius:1px}
+.stats-list{display:flex;flex-direction:column;gap:0}
+.stat-row{display:flex;justify-content:space-between;align-items:baseline;padding:6px 0;border-bottom:0.5px solid var(--border)}
+.stat-row:last-child{border-bottom:none}
+.stat-lbl{font-size:11px;color:var(--text3)}
+.stat-val{font-family:var(--display);font-size:1.2rem;letter-spacing:0.05em}
+.stat-unit{font-size:9px;color:var(--text3);margin-left:3px}
+.class-badge{
+  display:inline-block;font-family:var(--jp);font-size:8px;font-weight:700;
+  letter-spacing:0.12em;text-transform:uppercase;padding:3px 10px;margin-top:0.75rem;
+  border:0.5px solid;
+}
+
+/* ── RACE ── */
+.race-wrap{background:var(--bg2);border:0.5px solid var(--border2);padding:1.25rem;overflow:hidden}
+.race-sub{font-size:10px;color:var(--text3);font-style:italic;margin-bottom:1.25rem;line-height:1.6}
+.race-controls{display:flex;gap:8px;margin-bottom:1.25rem;align-items:center}
+.btn{
+  font-family:var(--display);font-size:0.95rem;letter-spacing:0.12em;
+  padding:10px 22px;border:1.5px solid;background:transparent;cursor:pointer;
+  transition:all 0.2s;-webkit-tap-highlight-color:transparent;
+}
+.btn-go{border-color:var(--lime);color:var(--lime)}.btn-go:hover,.btn-go:active{background:var(--lime);color:var(--bg)}
+.btn-reset{border-color:var(--text3);color:var(--text3)}.btn-reset:hover,.btn-reset:active{border-color:var(--text2);color:var(--text2)}
+.countdown{font-family:var(--display);font-size:2.4rem;color:var(--pink);min-width:44px;letter-spacing:0.05em;line-height:1}
+.race-lanes{display:flex;flex-direction:column;gap:8px}
+.race-lane{display:flex;align-items:center;gap:8px}
+.race-label-col{width:70px;flex-shrink:0}
+.race-owner-name{font-size:11px;font-weight:700;line-height:1.2}
+.race-car-name{font-size:9px;color:var(--text3);line-height:1.2}
+.race-track{
+  flex:1;height:34px;background:var(--bg4);
+  border:0.5px solid var(--border);position:relative;overflow:hidden;
+}
+.race-track::after{
+  content:'';position:absolute;right:0;top:0;bottom:0;width:14px;
+  background:repeating-conic-gradient(rgba(255,255,255,0.2) 0% 25%,transparent 0% 50%) 0 0/7px 7px;
+}
+.race-car-block{
+  position:absolute;left:2px;top:50%;transform:translateY(-50%);
+  will-change:transform;
+  display:flex;align-items:center;justify-content:center;
+  height:26px;min-width:68px;
+  font-family:var(--display);font-size:0.72rem;letter-spacing:0.08em;color:#07070a;
+  padding:0 7px;white-space:nowrap;
+}
+.race-qm-col{width:36px;flex-shrink:0;text-align:right}
+.race-qm-val{font-family:var(--display);font-size:0.95rem;letter-spacing:0.04em;line-height:1.2}
+.race-qm-lbl{font-size:8px;color:var(--text3)}
+.race-note{font-size:9px;color:var(--text3);font-style:italic;margin-top:1rem;line-height:1.65}
+
+/* ── RANKING ── */
+.rank-item{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.rank-ident{width:90px;flex-shrink:0}
+.rank-owner{font-size:12px;font-weight:700;color:var(--text)}
+.rank-car{font-size:9px;color:var(--text3);line-height:1.3}
+.rank-track{flex:1;height:22px;background:var(--bg3);border:0.5px solid var(--border);position:relative;overflow:hidden}
+.rank-fill{height:100%;display:flex;align-items:center;padding:0 8px}
+.rank-fill span{font-size:10px;font-weight:700;color:var(--bg);white-space:nowrap}
+.rank-pts{width:28px;flex-shrink:0;font-family:var(--display);font-size:1rem;text-align:right}
+
+/* animations */
+@keyframes slideIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.car-card{animation:slideIn 0.45s ease both}
+.car-card:nth-child(1){animation-delay:.04s}.car-card:nth-child(2){animation-delay:.09s}
+.car-card:nth-child(3){animation-delay:.14s}.car-card:nth-child(4){animation-delay:.19s}
+.car-card:nth-child(5){animation-delay:.24s}.car-card:nth-child(6){animation-delay:.29s}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HERO -->
+<header class="hero">
+  <p class="hero-kicker">第一話 — EPISODE ONE</p>
+  <h1 class="hero-title">Cars:<em>The Anime</em></h1>
+  <p class="hero-sub">six cars. six owners. delusion vs. reality. normalized data. rage bait included.</p>
+  <div class="hero-pills">
+    <span class="hero-pill">6 cars</span>
+    <span class="hero-pill">5 vibe metrics</span>
+    <span class="hero-pill">2 perspectives</span>
+    <span class="hero-pill">1 race</span>
+  </div>
+</header>
+
+<!-- SECTION 1 -->
+<div class="sec">
+  <div class="sec-hdr"><span class="sec-num">01</span><span class="sec-title">The Lineup</span></div>
+  <p class="sec-sub">tap owner / outsider to switch perspective · tap stats to expand</p>
+  <div id="car-cards"></div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SECTION 2 -->
+<div class="sec">
+  <div class="sec-hdr"><span class="sec-num">02</span><span class="sec-title">Quarter Mile</span></div>
+  <div class="race-wrap">
+    <p class="race-sub">proportional to normalized ¼ mile times — true-zero, 93-oct equivalent</p>
+    <div class="race-controls">
+      <button class="btn btn-go" onclick="startRace()">START</button>
+      <button class="btn btn-reset" onclick="resetRace()">RESET</button>
+      <span class="countdown" id="countdown"></span>
+    </div>
+    <div class="race-lanes" id="race-grid"></div>
+    <p class="race-note">※ 911 (11.8s) = fastest → 4.5s animation. All others proportional. Checkered = finish.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SECTION 3 -->
+<div class="sec">
+  <div class="sec-hdr"><span class="sec-num">03</span><span class="sec-title">Vibe Ranking</span></div>
+  <p class="sec-sub">composite: drip · pain (inv) · soul · post-ability · value</p>
+  <div id="rank-grid"></div>
+</div>
+
+</div><!-- /page -->
+
+<script>
+// ── SVG SILHOUETTES (same as desktop) ──
+var SVGS={
+brz:function(col){return'<svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="gBRZ" cx="50%" cy="80%" r="60%"><stop offset="0%" stop-color="'+col+'" stop-opacity="0.18"/><stop offset="100%" stop-color="'+col+'" stop-opacity="0"/></radialGradient><filter id="fBRZ"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><rect width="500" height="200" fill="url(#gBRZ)"/><line x1="320" y1="30" x2="500" y2="30" stroke="rgba(255,255,255,0.04)" stroke-width="1.5"/><line x1="350" y1="50" x2="500" y2="50" stroke="rgba(255,255,255,0.03)" stroke-width="1"/><ellipse cx="250" cy="168" rx="195" ry="10" fill="rgba(0,0,0,0.5)"/><g filter="url(#fBRZ)"><path d="M 48,158 L 52,148 L 68,140 L 90,120 L 120,98 L 160,84 L 200,78 L 255,76 L 305,78 L 335,86 L 358,100 L 372,118 L 382,138 L 390,148 L 420,150 L 428,155 L 428,162 L 48,162 Z" fill="#1a1a22" stroke="'+col+'" stroke-width="1.8"/><path d="M 160,84 L 175,65 L 255,60 L 290,76 L 260,78 L 200,78 Z" fill="rgba(100,180,255,0.13)" stroke="rgba(150,200,255,0.3)" stroke-width="0.8"/><path d="M 290,76 L 335,86 L 328,76 L 295,68 Z" fill="rgba(100,180,255,0.10)" stroke="rgba(150,200,255,0.25)" stroke-width="0.8"/><path d="M 356,98 L 374,95 L 376,100 L 358,102 Z" fill="'+col+'" opacity="0.7"/><path d="M 68,160 Q 68,125 105,125 Q 142,125 142,160" fill="#111"/><path d="M 345,160 Q 345,125 382,125 Q 419,125 419,160" fill="#111"/><circle cx="105" cy="157" r="28" fill="#0d0d0d" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"/><circle cx="105" cy="157" r="20" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="0.8"/><circle cx="105" cy="157" r="7" fill="'+col+'" opacity="0.85"/><line x1="105" y1="137" x2="105" y2="177" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/><line x1="85" y1="157" x2="125" y2="157" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/><circle cx="382" cy="157" r="28" fill="#0d0d0d" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"/><circle cx="382" cy="157" r="20" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="0.8"/><circle cx="382" cy="157" r="7" fill="'+col+'" opacity="0.85"/><line x1="382" y1="137" x2="382" y2="177" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/><line x1="362" y1="157" x2="402" y2="157" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/><rect x="49" y="143" width="22" height="6" rx="1" fill="'+col+'" opacity="0.95"/><rect x="49" y="141" width="18" height="2" rx="1" fill="white" opacity="0.6"/><rect x="410" y="140" width="18" height="8" rx="1" fill="'+col+'" opacity="0.85"/></g><text x="490" y="185" font-family="Bebas Neue" font-size="11" fill="rgba(255,255,255,0.08)" text-anchor="end">BRZ</text></svg>';},
+wrx:function(col){return'<svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="gWRX" cx="50%" cy="80%" r="60%"><stop offset="0%" stop-color="'+col+'" stop-opacity="0.15"/><stop offset="100%" stop-color="'+col+'" stop-opacity="0"/></radialGradient><filter id="fWRX"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><rect width="500" height="200" fill="url(#gWRX)"/><line x1="310" y1="28" x2="500" y2="28" stroke="rgba(255,255,255,0.04)" stroke-width="1.5"/><ellipse cx="255" cy="170" rx="200" ry="9" fill="rgba(0,0,0,0.45)"/><g filter="url(#fWRX)"><path d="M 42,158 L 48,145 L 62,132 L 85,112 L 118,94 L 155,84 L 195,80 L 285,78 L 335,82 L 368,95 L 388,118 L 396,140 L 402,152 L 430,154 L 435,160 L 435,164 L 42,164 Z" fill="#1a1a22" stroke="'+col+'" stroke-width="1.8"/><path d="M 195,80 L 225,76 L 245,76 L 255,80 L 225,80 Z" fill="#111" stroke="'+col+'" stroke-width="1.2"/><rect x="205" y="72" width="40" height="8" rx="2" fill="#0d0d0d" stroke="'+col+'" stroke-width="1"/><path d="M 155,84 L 168,62 L 255,57 L 295,70 L 285,78 L 195,80 Z" fill="rgba(100,180,255,0.13)" stroke="rgba(150,200,255,0.3)" stroke-width="0.8"/><path d="M 295,70 L 335,82 L 330,68 L 300,60 Z" fill="rgba(100,180,255,0.10)" stroke="rgba(150,200,255,0.25)" stroke-width="0.8"/><line x1="240" y1="78" x2="244" y2="162" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/><line x1="300" y1="70" x2="298" y2="162" stroke="rgba(255,255,255,0.1)" stroke-width="1.2"/><path d="M 60,162 Q 60,124 100,124 Q 140,124 140,162" fill="#111"/><path d="M 358,162 Q 358,124 398,124 Q 438,124 438,162" fill="#111"/><circle cx="100" cy="159" r="30" fill="#0d0d0d" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"/><circle cx="100" cy="159" r="21" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="0.8"/><circle cx="100" cy="159" r="7" fill="'+col+'" opacity="0.85"/><line x1="100" y1="138" x2="100" y2="180" stroke="rgba(255,255,255,0.18)" stroke-width="0.8"/><line x1="79" y1="159" x2="121" y2="159" stroke="rgba(255,255,255,0.18)" stroke-width="0.8"/><circle cx="398" cy="159" r="30" fill="#0d0d0d" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"/><circle cx="398" cy="159" r="21" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="0.8"/><circle cx="398" cy="159" r="7" fill="'+col+'" opacity="0.85"/><line x1="398" y1="138" x2="398" y2="180" stroke="rgba(255,255,255,0.18)" stroke-width="0.8"/><line x1="377" y1="159" x2="419" y2="159" stroke="rgba(255,255,255,0.18)" stroke-width="0.8"/><path d="M 43,142 L 66,135 L 68,142 L 58,148 L 43,148 Z" fill="'+col+'" opacity="0.9"/><rect x="412" y="135" width="22" height="14" rx="1" fill="'+col+'" opacity="0.8"/></g><text x="490" y="185" font-family="Bebas Neue" font-size="11" fill="rgba(255,255,255,0.08)" text-anchor="end">WRX</text></svg>';},
+z:function(col){return'<svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="gZ" cx="50%" cy="80%" r="60%"><stop offset="0%" stop-color="'+col+'" stop-opacity="0.2"/><stop offset="100%" stop-color="'+col+'" stop-opacity="0"/></radialGradient><filter id="fZ"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><rect width="500" height="200" fill="url(#gZ)"/><line x1="300" y1="28" x2="500" y2="28" stroke="rgba(255,255,255,0.05)" stroke-width="1.5"/><ellipse cx="252" cy="168" rx="196" ry="9" fill="rgba(0,0,0,0.5)"/><g filter="url(#fZ)"><path d="M 40,158 L 44,144 L 58,128 L 78,108 L 112,88 L 155,76 L 205,70 L 260,68 L 305,70 L 338,80 L 365,96 L 382,116 L 390,136 L 396,150 L 418,152 L 424,158 L 424,163 L 40,163 Z" fill="#1a1a22" stroke="'+col+'" stroke-width="2"/><path d="M 155,76 L 172,54 L 255,49 L 290,62 L 270,68 L 205,70 Z" fill="rgba(100,185,255,0.14)" stroke="rgba(150,210,255,0.32)" stroke-width="0.8"/><path d="M 290,62 L 338,80 L 332,64 L 298,53 Z" fill="rgba(100,185,255,0.11)" stroke="rgba(150,210,255,0.28)" stroke-width="0.8"/><path d="M 58,162 Q 56,122 98,122 Q 140,122 140,162" fill="#0f0f0f"/><path d="M 352,162 Q 350,122 392,122 Q 434,122 434,162" fill="#0f0f0f"/><circle cx="98" cy="158" r="31" fill="#0d0d0d" stroke="rgba(255,255,255,0.16)" stroke-width="1.2"/><circle cx="98" cy="158" r="22" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="0.8"/><circle cx="98" cy="158" r="8" fill="'+col+'" opacity="0.9"/><line x1="98" y1="136" x2="98" y2="180" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/><line x1="76" y1="158" x2="120" y2="158" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/><circle cx="392" cy="158" r="31" fill="#0d0d0d" stroke="rgba(255,255,255,0.16)" stroke-width="1.2"/><circle cx="392" cy="158" r="22" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="0.8"/><circle cx="392" cy="158" r="8" fill="'+col+'" opacity="0.9"/><line x1="392" y1="136" x2="392" y2="180" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/><line x1="370" y1="158" x2="414" y2="158" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/><ellipse cx="52" cy="140" rx="12" ry="8" fill="'+col+'" opacity="0.95"/><ellipse cx="52" cy="140" rx="8" ry="5" fill="white" opacity="0.5"/><rect x="406" y="134" width="20" height="5" rx="1" fill="'+col+'" opacity="0.9"/><rect x="406" y="141" width="20" height="5" rx="1" fill="'+col+'" opacity="0.6"/></g><text x="490" y="185" font-family="Bebas Neue" font-size="11" fill="rgba(255,255,255,0.08)" text-anchor="end">Z</text></svg>';},
+supra:function(col){return'<svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="gSUP" cx="50%" cy="80%" r="60%"><stop offset="0%" stop-color="'+col+'" stop-opacity="0.15"/><stop offset="100%" stop-color="'+col+'" stop-opacity="0"/></radialGradient><filter id="fSUP"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><rect width="500" height="200" fill="url(#gSUP)"/><line x1="310" y1="28" x2="500" y2="28" stroke="rgba(255,255,255,0.04)" stroke-width="1.5"/><ellipse cx="250" cy="168" rx="190" ry="9" fill="rgba(0,0,0,0.52)"/><g filter="url(#fSUP)"><path d="M 52,158 L 58,143 L 74,124 L 100,102 L 138,85 L 178,76 L 222,72 L 265,72 L 300,76 L 330,86 L 356,102 L 374,122 L 384,142 L 392,154 L 406,156 L 412,161 L 412,165 L 52,165 Z" fill="#18181f" stroke="'+col+'" stroke-width="2"/><path d="M 178,76 L 185,56 L 218,48 L 238,47 L 265,48 L 292,56 L 300,76 L 265,72 L 222,72 Z" fill="rgba(120,150,220,0.13)" stroke="rgba(160,190,255,0.32)" stroke-width="0.8"/><path d="M 185,56 L 205,50 L 228,48 L 228,54 L 205,56 Z" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.12)" stroke-width="0.5"/><path d="M 238,47 L 260,48 L 278,54 L 278,58 L 260,53 Z" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.12)" stroke-width="0.5"/><rect x="215" y="46" width="30" height="4" rx="1" fill="'+col+'" opacity="0.5"/><path d="M 320,95 L 346,105 L 342,112 L 316,102 Z" fill="rgba(0,0,0,0.6)" stroke="'+col+'" stroke-width="0.7"/><path d="M 70,163 Q 68,122 112,122 Q 156,122 156,163" fill="#0d0d0d"/><path d="M 335,163 Q 333,122 377,122 Q 421,122 421,163" fill="#0d0d0d"/><circle cx="112" cy="159" r="32" fill="#0c0c0c" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"/><circle cx="112" cy="159" r="23" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="0.8"/><circle cx="112" cy="159" r="8" fill="'+col+'" opacity="0.75"/><line x1="112" y1="136" x2="112" y2="182" stroke="rgba(255,255,255,0.18)" stroke-width="0.8"/><line x1="89" y1="159" x2="135" y2="159" stroke="rgba(255,255,255,0.18)" stroke-width="0.8"/><circle cx="377" cy="159" r="32" fill="#0c0c0c" stroke="rgba(255,255,255,0.15)" stroke-width="1.2"/><circle cx="377" cy="159" r="23" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="0.8"/><circle cx="377" cy="159" r="8" fill="'+col+'" opacity="0.75"/><line x1="377" y1="136" x2="377" y2="182" stroke="rgba(255,255,255,0.18)" stroke-width="0.8"/><line x1="354" y1="159" x2="400" y2="159" stroke="rgba(255,255,255,0.18)" stroke-width="0.8"/><path d="M 53,142 L 72,133 L 78,140 L 72,148 L 53,150 Z" fill="'+col+'" opacity="0.9"/><line x1="55" y1="139" x2="76" y2="131" stroke="white" opacity="0.5" stroke-width="1"/><rect x="394" y="132" width="20" height="20" rx="2" fill="'+col+'" opacity="0.8"/></g><text x="490" y="185" font-family="Bebas Neue" font-size="11" fill="rgba(255,255,255,0.07)" text-anchor="end">A91-CF</text></svg>';},
+ct4:function(col){return'<svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="gCT4" cx="50%" cy="80%" r="60%"><stop offset="0%" stop-color="'+col+'" stop-opacity="0.16"/><stop offset="100%" stop-color="'+col+'" stop-opacity="0"/></radialGradient><filter id="fCT4"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><rect width="500" height="200" fill="url(#gCT4)"/><line x1="295" y1="28" x2="500" y2="28" stroke="rgba(255,255,255,0.04)" stroke-width="1.5"/><ellipse cx="258" cy="169" rx="200" ry="9" fill="rgba(0,0,0,0.48)"/><g filter="url(#fCT4)"><path d="M 38,158 L 44,142 L 60,124 L 86,104 L 122,88 L 162,80 L 210,76 L 290,76 L 330,80 L 364,92 L 386,110 L 396,128 L 400,142 L 400,148 L 418,150 L 426,155 L 428,160 L 428,164 L 38,164 Z" fill="#1a1a22" stroke="'+col+'" stroke-width="1.8"/><rect x="385" y="108" width="18" height="4" rx="1" fill="'+col+'" opacity="0.6"/><path d="M 162,80 L 175,58 L 262,53 L 300,66 L 290,76 L 210,76 Z" fill="rgba(100,185,255,0.13)" stroke="rgba(150,210,255,0.3)" stroke-width="0.8"/><path d="M 300,66 L 330,80 L 325,65 L 304,57 Z" fill="rgba(100,185,255,0.10)" stroke="rgba(150,210,255,0.25)" stroke-width="0.8"/><line x1="248" y1="76" x2="252" y2="163" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/><line x1="302" y1="66" x2="300" y2="163" stroke="rgba(255,255,255,0.1)" stroke-width="1.2"/><path d="M 56,162 Q 54,122 96,122 Q 138,122 138,162" fill="#0d0d0d"/><path d="M 358,162 Q 356,122 398,122 Q 440,122 440,162" fill="#0d0d0d"/><circle cx="96" cy="158" r="31" fill="#0c0c0c" stroke="rgba(255,255,255,0.16)" stroke-width="1.2"/><circle cx="96" cy="158" r="22" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="0.8"/><circle cx="96" cy="158" r="8" fill="'+col+'" opacity="0.88"/><line x1="96" y1="136" x2="96" y2="180" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/><line x1="74" y1="158" x2="118" y2="158" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/><circle cx="398" cy="158" r="31" fill="#0c0c0c" stroke="rgba(255,255,255,0.16)" stroke-width="1.2"/><circle cx="398" cy="158" r="22" fill="#141414" stroke="rgba(255,255,255,0.1)" stroke-width="0.8"/><circle cx="398" cy="158" r="8" fill="'+col+'" opacity="0.88"/><line x1="398" y1="136" x2="398" y2="180" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/><line x1="376" y1="158" x2="420" y2="158" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/><rect x="40" y="130" width="8" height="22" rx="2" fill="'+col+'" opacity="0.95"/><rect x="50" y="134" width="6" height="14" rx="1" fill="'+col+'" opacity="0.7"/><rect x="404" y="132" width="24" height="14" rx="1" fill="'+col+'" opacity="0.85"/></g><text x="490" y="185" font-family="Bebas Neue" font-size="11" fill="rgba(255,255,255,0.08)" text-anchor="end">CT4-V</text></svg>';},
+p11:function(col){return'<svg viewBox="0 0 500 200" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="gP11" cx="50%" cy="80%" r="60%"><stop offset="0%" stop-color="'+col+'" stop-opacity="0.2"/><stop offset="100%" stop-color="'+col+'" stop-opacity="0"/></radialGradient><filter id="fP11"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><rect width="500" height="200" fill="url(#gP11)"/><line x1="310" y1="28" x2="500" y2="28" stroke="rgba(255,255,255,0.05)" stroke-width="1.5"/><ellipse cx="250" cy="168" rx="192" ry="9" fill="rgba(0,0,0,0.52)"/><g filter="url(#fP11)"><path d="M 55,158 L 60,144 L 72,126 L 90,108 L 115,92 L 148,80 L 188,73 L 235,70 L 275,71 L 308,76 L 335,86 L 356,100 L 368,115 L 374,130 L 378,142 L 395,146 L 402,152 L 404,158 L 55,158 Z" fill="#1a1a22" stroke="'+col+'" stroke-width="2"/><path d="M 188,73 L 196,55 L 248,50 L 282,55 L 288,65 L 275,71 L 235,70 Z" fill="rgba(110,175,255,0.14)" stroke="rgba(150,200,255,0.32)" stroke-width="0.8"/><path d="M 282,55 L 308,76 L 300,74 L 280,60 Z" fill="rgba(60,60,80,0.6)" stroke="rgba(255,255,255,0.12)" stroke-width="0.8"/><rect x="270" y="52" width="6" height="18" rx="2" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.15)" stroke-width="0.5"/><path d="M 65,157 Q 62,115 108,115 Q 154,115 154,157" fill="#0c0c0c"/><path d="M 330,157 Q 328,115 374,115 Q 420,115 374,157" fill="#0c0c0c"/><circle cx="108" cy="154" r="34" fill="#0b0b0b" stroke="rgba(255,255,255,0.16)" stroke-width="1.2"/><circle cx="108" cy="154" r="25" fill="#131313" stroke="rgba(255,255,255,0.1)" stroke-width="0.8"/><circle cx="108" cy="154" r="9" fill="'+col+'" opacity="0.85"/><line x1="108" y1="129" x2="108" y2="179" stroke="rgba(255,255,255,0.2)" stroke-width="1"/><line x1="83" y1="154" x2="133" y2="154" stroke="rgba(255,255,255,0.2)" stroke-width="1"/><line x1="90" y1="136" x2="126" y2="172" stroke="rgba(255,255,255,0.12)" stroke-width="0.8"/><line x1="126" y1="136" x2="90" y2="172" stroke="rgba(255,255,255,0.12)" stroke-width="0.8"/><circle cx="374" cy="154" r="34" fill="#0b0b0b" stroke="rgba(255,255,255,0.16)" stroke-width="1.2"/><circle cx="374" cy="154" r="25" fill="#131313" stroke="rgba(255,255,255,0.1)" stroke-width="0.8"/><circle cx="374" cy="154" r="9" fill="'+col+'" opacity="0.85"/><line x1="374" y1="129" x2="374" y2="179" stroke="rgba(255,255,255,0.2)" stroke-width="1"/><line x1="349" y1="154" x2="399" y2="154" stroke="rgba(255,255,255,0.2)" stroke-width="1"/><line x1="356" y1="136" x2="392" y2="172" stroke="rgba(255,255,255,0.12)" stroke-width="0.8"/><line x1="392" y1="136" x2="356" y2="172" stroke="rgba(255,255,255,0.12)" stroke-width="0.8"/><circle cx="65" cy="138" r="12" fill="'+col+'" opacity="0.9"/><circle cx="65" cy="138" r="7" fill="white" opacity="0.55"/><circle cx="65" cy="138" r="3" fill="'+col+'" opacity="1"/><rect x="380" y="130" width="26" height="6" rx="1" fill="'+col+'" opacity="0.9"/><rect x="380" y="138" width="26" height="6" rx="1" fill="'+col+'" opacity="0.55"/></g><text x="490" y="185" font-family="Bebas Neue" font-size="11" fill="rgba(255,255,255,0.08)" text-anchor="end">911</text></svg>';}
+};
+
+var cars=[
+  {id:"brz",year:"2025",name:"Subaru BRZ",short:"BRZ",owner:"Cody",config:"6MT · RWD · 228 hp · ~$35K",color:"#c8ff00",cls:"Affordable Sport Coupe",
+  tags:[{l:"you wouldn't get it",bg:"rgba(200,255,0,0.12)",c:"#c8ff00"},{l:"228hp btw",bg:"rgba(200,255,0,0.08)",c:"#a0cc00"}],
+  ownerBrag:"i genuinely feel bad for people who haven't driven a BRZ. you can keep your turbos and your torque — i found out what it means to actually drive a car. every single input is perfectly weighted. the steering tells you things that other cars' traction control hides from you. i took it to the canyon last weekend and i was in a zone that other drivers in faster cars simply cannot access. 228 horsepower is enough when you know what you're doing, and i know what i'm doing. the skidpad number ties the supra. the SUPRA. let that settle.",
+  outsider:"cody. buddy. you own a 228-horsepower car in 2025. that is a fact that exists independently of how you feel about heel-toe downshifting. your car gets beaten to 60mph by a loaded minivan with the wrong tires on, and you have written a personal philosophy around why that's actually a virtue. you talk about 'the limit' of this car at every single gathering, but the limit of this car is that it cannot merge onto a california freeway without the driver visibly committing to a bit. the skidpad number is great — we know, you've mentioned it — but the skidpad is a circle, cody. nobody is impressed by a circle. get a therapist. get a turbo. consider that these are not mutually exclusive.",
+  drip:7,pain:5,soul:10,post:6,value:10,z60:6.10,qm:14.5,trap:97,brk:144,skid:1.00},
+
+  {id:"wrx",year:"2026",name:"Subaru WRX",short:"WRX",owner:"Michael",config:"6MT · AWD · 271 hp · ~$42K",color:"#00e5ff",cls:"Practical AWD Performance",
+  tags:[{l:"aesthetically brave",bg:"rgba(0,229,255,0.12)",c:"#00e5ff"},{l:"instagram who?",bg:"rgba(0,229,255,0.08)",c:"#00b8cc"}],
+  ownerBrag:"AWD, manual, four doors, $42,000. i will wait while you find another car that does all four of those things. you can't. i looked. this is the only one. i drove it through a snowstorm at a speed i will not disclose here and it simply... handled it. no drama. the hood scoop is functional — it's intercooler cooling, it's not decorative — and if you think it's ugly you're simply unfamiliar with the concept of form following function. i autocross this car. it runs mid-pack against dedicated sports cars. in the rain it runs near the front.",
+  outsider:"michael has convinced himself that driving an ugly car is a personality. the WRX hood scoop is decorative at stock boost levels and michael knows this, which is why he learned the word 'intercooler' specifically so he could say it to people who question the hood scoop. the interior is a crime scene of mismatched textures assembled by someone who gave up halfway through. the exhaust note is a sound that michael calls 'characterful' and that his apartment complex's HOA board calls 'the reason we had an emergency meeting in march.' he has told the story of the january blizzard to no fewer than 60 people. not every single person needed to hear it, michael. some of them were just being polite.",
+  drip:5,pain:3,soul:8,post:4,value:9,z60:6.00,qm:14.1,trap:98,brk:150,skid:0.98},
+
+  {id:"z",year:"2023",name:"Nissan Z",short:"Z",owner:"Drew",config:"6MT · RWD · 400 hp · ~$50K",color:"#ff2d78",cls:"Affordable Sport Coupe",
+  tags:[{l:"photogenic by accident",bg:"rgba(255,45,120,0.12)",c:"#ff2d78"},{l:"gearbox could be better tho",bg:"rgba(255,45,120,0.08)",c:"#cc2460"}],
+  ownerBrag:"twin-turbo V6. six-speed manual. 400 horsepower. under fifty thousand dollars. i want you to read that again. this is what nissan made. i get followed in parking lots. i had a stranger ask to photograph my car in a grocery store lot last tuesday. the torque curve is so wide you don't even have to shift aggressively — it just pulls from anywhere. yes the gearbox has some notchiness in cold weather. yes i mention that before anyone asks, because i know the spec sheet and i know this car and i know it better than the critics do.",
+  outsider:"drew's car gets beaten to 60mph by a WRX that costs eight thousand dollars less and belongs to a guy named michael. let that be the first sentence. the gearbox is notchy, the interior plastics are embarrassing for a $50,000 car, and the rated 400 horsepower requires 93-octane to achieve — which means drew's car on whatever is cheapest at the shell on his commute is making something closer to 'we don't talk about it' horsepower. drew has told the story of the stranger photographing his car to approximately every person he has met since. drew. it was one stranger. people photograph dumpster fires too.",
+  drip:9,pain:5,soul:9,post:9,value:8,z60:4.65,qm:13.4,trap:106,brk:152,skid:0.98},
+
+  {id:"supra",year:"2022",name:"GR Supra A91-CF",short:"A91-CF",owner:"Derrick",config:"8AT · RWD · 382 hp · ~$63K · Phantom Matte",color:"#c0c0c8",cls:"Affordable Sport Coupe",
+  tags:[{l:"matte grey (you're welcome)",bg:"rgba(192,192,200,0.12)",c:"#c0c0c8"},{l:"BMW inside (cope)",bg:"rgba(192,192,200,0.08)",c:"#909098"},{l:"500 units. count them.",bg:"rgba(255,184,0,0.12)",c:"#ffb800"}],
+  ownerBrag:"this is a limited-edition carbon fiber toyota. the matte paint is called Phantom Grey and it was available exclusively on the A91-CF edition which was limited to 500 units globally. the carbon fiber roof reduces unsprung weight. the alcantara interior is hand-trimmed. i park and walk away from this car and i can hear people's phones coming out behind me. the 8-speed ZF automatic shifts faster than any human with a clutch pedal, which is a fact that people find inconvenient so they don't talk about it.",
+  outsider:"derrick paid sixty-three thousand dollars for a BMW. the toyota badge is on the outside. the bmw is on the inside. the b58 engine, the zf gearbox, the chassis — all bmw. the only thing toyota contributed was the body panels and the decision to remove the manual transmission option, which means derrick paid a $63K premium for an automatic bmw with matte paint and a spoiler and now spends an active portion of his day defending this to strangers on the internet. the matte paint will cost $4,000 to repair if a shopping cart looks at it wrong. enjoy the parking anxiety, derrick. you earned it.",
+  drip:10,pain:3,soul:5,post:10,value:5,z60:4.00,qm:12.4,trap:114,brk:147,skid:1.00},
+
+  {id:"ct4",year:"2026",name:"CT4-V Blackwing",short:"BW",owner:"Dustan",config:"10AT · RWD · 472 hp · ~$75K",color:"#ff6b35",cls:"Sport Sedan",
+  tags:[{l:"american? (yes really)",bg:"rgba(255,107,53,0.12)",c:"#ff6b35"},{l:"interior is just... fine",bg:"rgba(255,107,53,0.08)",c:"#cc5525"}],
+  ownerBrag:"472 horsepower. magnetic ride control. a suspension tune developed at the nürburgring. this car laps faster than an M3 competition and costs less than one, which is a sentence i have tested on actual m3 owners and i want to tell you the reaction is always worth it. the blackwing badge is earned — this is not a trim level, it's a performance division. i track this car. the brake fade is minimal. the tire wear is my problem and i am happy to have that problem.",
+  outsider:"dustan drives a cadillac. not a bmw. not a mercedes. a cadillac. and he wants credit for it, which is somehow the most exhausting part. yes the lap times are real. yes the nürburgring time is legitimate. and yet when dustan pulls into cars and coffee, people assume it's a rental, and this is a social outcome dustan has chosen to live with. the infotainment system boots up like it's running windows vista on a good day. the interior trim includes a surface that makes a noise when the temperature changes. dustan refreshes the nürburgring lap time leaderboard. these are both things dustan does.",
+  drip:6,pain:3,soul:8,post:5,value:7,z60:4.30,qm:12.6,trap:114,brk:158,skid:1.04},
+
+  {id:"p11",year:"2026",name:"911 Carrera Cab",short:"911",owner:"Scott",config:"8-PDK · RWD · 388 hp · ~$140K",color:"#ff2d78",cls:"Premium Open-Top GT",
+  tags:[{l:"just $140K casually",bg:"rgba(255,45,120,0.12)",c:"#ff2d78"},{l:"no manual on base cab",bg:"rgba(255,45,120,0.08)",c:"#cc2460"}],
+  ownerBrag:"i want to be very clear that i did not buy this car to impress anyone. i bought it because it is objectively the finest driver's car in this comparison — best skidpad, best braking, fastest quarter mile. the PDK shifts in 80 milliseconds. the rear engine placement under hard braking creates a stability that front-engined cars cannot replicate. i drop the top when weather allows, which in this climate is approximately seven months of the year. it is a measured, defensible purchase for someone who values engineering excellence above most other things.",
+  outsider:"scott spent $140,000 on a car and the first thing porsche did was charge him extra for the color. then extra for the floor mats. then extra for the clock on the dashboard, which is a clock, which costs $3,200 because it is a porsche clock. scott paid all of it. the base carrera cabriolet doesn't come with a manual because porsche decided you don't get one, and scott has since written two thousand words on a forum about why the PDK is actually better — which it is — and which scott desperately needs to be true. scott is paying $140,000 for the feeling of being right, and is unfortunately correct, which is the worst possible outcome for everyone else on this list.",
+  drip:10,pain:2,soul:6,post:10,value:2,z60:3.60,qm:11.8,trap:116,brk:137,skid:1.06}
+];
+
+var vibes=[
+  {k:"drip",l:"Drip",c:"#ff2d78",inv:false},
+  {k:"pain",l:"Daily Pain",c:"#ffb800",inv:true},
+  {k:"soul",l:"Soul",c:"#c8ff00",inv:false},
+  {k:"post",l:"Post-ability",c:"#00e5ff",inv:false},
+  {k:"value",l:"Value Flex",c:"#9b5de5",inv:false}
+];
+var statKeys=[
+  {k:"z60",l:"0–60 mph",u:"s",lib:true},
+  {k:"qm",l:"¼ Mile",u:"s",lib:true},
+  {k:"trap",l:"Trap Speed",u:"mph",lib:false},
+  {k:"brk",l:"70–0 Braking",u:"ft",lib:true},
+  {k:"skid",l:"Skidpad",u:"g",lib:false}
+];
+function fv(k,v){if(k==="z60"||k==="qm")return v.toFixed(1);if(k==="skid")return v.toFixed(2);return Math.round(v)+"";}
+
+function globalBests(){
+  var b={},w={};
+  statKeys.forEach(function(s){
+    var vs=cars.map(function(c){return c[s.k];});
+    b[s.k]=s.lib?Math.min.apply(null,vs):Math.max.apply(null,vs);
+    w[s.k]=s.lib?Math.max.apply(null,vs):Math.min.apply(null,vs);
+  });
+  return{b:b,w:w};
+}
+
+// ── RENDER CARDS ──
+(function(){
+  var ex=globalBests();
+  var html="";
+  cars.forEach(function(c,idx){
+    var tagHtml=c.tags.map(function(t){return"<span class='tag' style='background:"+t.bg+";color:"+t.c+"'>"+t.l+"</span>";}).join("");
+
+    var vibeHtml=vibes.map(function(v){
+      var score=c[v.k];
+      return"<div class='vibe-chip'>"
+        +"<div class='vibe-chip-lbl'>"+v.l+"</div>"
+        +"<div class='vibe-chip-val' style='color:"+v.c+"'>"+score+"/10</div>"
+        +"<div class='vibe-chip-bar'><div class='vibe-chip-fill' style='width:"+(score*10)+"%;background:"+v.c+"'></div></div>"
+        +"</div>";
+    }).join("");
+
+    var statsHtml=statKeys.map(function(s){
+      var v=c[s.k];
+      var isBest=v===ex.b[s.k],isWorst=v===ex.w[s.k];
+      var vc=isBest?"var(--lime)":isWorst?"var(--pink)":"var(--text)";
+      return"<div class='stat-row'><span class='stat-lbl'>"+s.l+"</span>"
+        +"<span><span class='stat-val' style='color:"+vc+"'>"+fv(s.k,v)+"</span>"
+        +"<span class='stat-unit'>"+s.u+(isBest?" ★":"")+"</span></span></div>";
+    }).join("");
+
+    var cid="card-"+c.id;
+    html+="<div class='car-card' id='"+cid+"' style='--car-color:"+c.color+"'>"
+      // SVG illustration
+      +"<div class='car-svg-wrap'>"+SVGS[c.id](c.color)+"</div>"
+      // header
+      +"<div class='car-head'>"
+      +"<div class='car-owner-line'>OWNER: "+c.owner.toUpperCase()+"</div>"
+      +"<div class='car-name'>"+c.name+"</div>"
+      +"<div class='car-config'>"+c.config+"</div>"
+      +"<div class='car-tags'>"+tagHtml+"</div>"
+      +"</div>"
+      // perspective toggle
+      +"<div class='persp-toggle'>"
+      +"<button class='persp-btn active-owner' id='btn-owner-"+c.id+"' onclick='showPersp(\""+c.id+"\",\"owner\")'>"+c.owner+"'s take</button>"
+      +"<button class='persp-btn' id='btn-outsider-"+c.id+"' onclick='showPersp(\""+c.id+"\",\"outsider\")'>outsider view</button>"
+      +"</div>"
+      +"<div class='persp-body visible' id='persp-owner-"+c.id+"'><p class='persp-text'>"+c.ownerBrag+"</p></div>"
+      +"<div class='persp-body' id='persp-outsider-"+c.id+"'><p class='persp-text'>"+c.outsider+"</p></div>"
+      // stats toggle
+      +"<div class='car-bottom'>"
+      +"<button class='bottom-toggle' onclick='toggleStats(\""+c.id+"\")'>"
+      +"<span>vibe scores &amp; performance stats</span>"
+      +"<span class='bottom-toggle-arrow' id='arrow-"+c.id+"'>↓</span>"
+      +"</button>"
+      +"<div class='bottom-inner' id='stats-"+c.id+"'>"
+      +"<div class='vibes-grid'>"+vibeHtml+"</div>"
+      +"<div class='stats-list'>"+statsHtml+"</div>"
+      +"<div class='class-badge' style='border-color:"+c.color+";color:"+c.color+"'>"+c.cls+"</div>"
+      +"</div>"
+      +"</div>"
+      +"</div>";
+  });
+  document.getElementById("car-cards").innerHTML=html;
+})();
+
+function showPersp(id, which){
+  var ownerBtn=document.getElementById("btn-owner-"+id);
+  var outsiderBtn=document.getElementById("btn-outsider-"+id);
+  var ownerBody=document.getElementById("persp-owner-"+id);
+  var outsiderBody=document.getElementById("persp-outsider-"+id);
+  if(which==="owner"){
+    ownerBtn.className="persp-btn active-owner";
+    outsiderBtn.className="persp-btn";
+    ownerBody.className="persp-body visible";
+    outsiderBody.className="persp-body";
+  }else{
+    outsiderBtn.className="persp-btn active-outsider";
+    ownerBtn.className="persp-btn";
+    outsiderBody.className="persp-body visible";
+    ownerBody.className="persp-body";
+  }
+}
+
+function toggleStats(id){
+  var inner=document.getElementById("stats-"+id);
+  var arrow=document.getElementById("arrow-"+id);
+  var open=inner.classList.contains("open");
+  inner.className=open?"bottom-inner":"bottom-inner open";
+  arrow.style.transform=open?"":"rotate(180deg)";
+}
+
+// ── RACE ──
+(function(){
+  var html="";
+  cars.forEach(function(c){
+    html+="<div class='race-lane'>"
+      +"<div class='race-label-col'>"
+      +"<div class='race-owner-name' style='color:"+c.color+"'>"+c.owner+"</div>"
+      +"<div class='race-car-name'>"+c.name+"</div>"
+      +"</div>"
+      +"<div class='race-track' id='track-"+c.id+"'>"
+      +"<div class='race-car-block' id='car-"+c.id+"' style='background:"+c.color+"'>"+c.owner.toUpperCase()+"</div>"
+      +"</div>"
+      +"<div class='race-qm-col'>"
+      +"<div class='race-qm-val' style='color:"+c.color+"'>"+c.qm.toFixed(1)+"</div>"
+      +"<div class='race-qm-lbl'>¼ mi</div>"
+      +"</div>"
+      +"</div>";
+  });
+  document.getElementById("race-grid").innerHTML=html;
+})();
+
+var raceRunning=false,raceAnims=[];
+
+function startRace(){
+  if(raceRunning)return;
+  resetRace();
+  raceRunning=true;
+  var cdEl=document.getElementById("countdown");
+  var n=3;
+  cdEl.textContent=n;cdEl.style.color="var(--amber)";
+  var iv=setInterval(function(){
+    n--;
+    if(n===0){cdEl.textContent="GO!";cdEl.style.color="var(--lime)";clearInterval(iv);setTimeout(function(){cdEl.textContent="";launch();},700);}
+    else cdEl.textContent=n;
+  },1000);
+}
+
+function launch(){
+  var fastest=Math.min.apply(null,cars.map(function(c){return c.qm;}));
+  var FAST_MS=4500;
+  var done=0;
+  cars.forEach(function(c){
+    var track=document.getElementById("track-"+c.id);
+    var block=document.getElementById("car-"+c.id);
+    if(!track||!block)return;
+    var tw=track.offsetWidth;
+    var bw=block.offsetWidth||72;
+    var target=tw-bw-18;
+    var dur=Math.round((c.qm/fastest)*FAST_MS);
+    var t0=null;
+    function step(ts){
+      if(!t0)t0=ts;
+      var p=Math.min((ts-t0)/dur,1);
+      var e=1-Math.pow(1-p,3);
+      block.style.transform="translateX("+(target*e)+"px)";
+      if(p<1){raceAnims.push(requestAnimationFrame(step));}
+      else{done++;if(done===cars.length)raceRunning=false;}
+    }
+    raceAnims.push(requestAnimationFrame(step));
+  });
+}
+
+function resetRace(){
+  raceAnims.forEach(function(id){cancelAnimationFrame(id);});
+  raceAnims=[];raceRunning=false;
+  document.getElementById("countdown").textContent="";
+  cars.forEach(function(c){
+    var el=document.getElementById("car-"+c.id);
+    if(el)el.style.transform="translateX(0px)";
+  });
+}
+
+// ── RANKING ──
+(function(){
+  function sc(car){var s=0;vibes.forEach(function(v){s+=v.inv?(10-car[v.k]):car[v.k];});return s;}
+  var scored=cars.map(function(c){return{car:c,total:sc(c)};});
+  scored.sort(function(a,b){return b.total-a.total;});
+  var maxT=scored[0].total;
+  var html="";
+  scored.forEach(function(item,i){
+    var pct=Math.round(item.total/maxT*100);
+    var isFirst=i===0,isLast=i===scored.length-1;
+    var fc=isFirst?item.car.color:isLast?"#1a1a1a":"#181820";
+    var tc=isFirst?"#07070a":"#555";
+    var pc=isFirst?item.car.color:isLast?"#2a2a2a":"#444";
+    html+="<div class='rank-item'>"
+      +"<div class='rank-ident'><div class='rank-owner' style='color:"+item.car.color+"'>"+item.car.owner+"</div><div class='rank-car'>"+item.car.name+"</div></div>"
+      +"<div class='rank-track'><div class='rank-fill' style='width:"+pct+"%;background:"+fc+"'><span style='color:"+tc+"'>"+item.total+" pts</span></div></div>"
+      +"<div class='rank-pts' style='color:"+pc+"'>"+item.total+"</div>"
+      +"</div>";
+  });
+  document.getElementById("rank-grid").innerHTML=html;
+})();
+</script>
+</body>
+</html>
